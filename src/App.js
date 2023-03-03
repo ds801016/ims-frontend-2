@@ -604,20 +604,21 @@ const App = () => {
         setShowSideBar(false);
       }
     });
-    if (!user) {
-      navigate("/login");
-    }
-    if (user) {
-      if (pathname == "/") navigate("/r1");
-    }
-    if (user) {
-      socket(user?.token).emit("fetch_notifications", { source: "react" });
-    }
+    // if (!user) {
+    //   navigate("/login");
+    // }
+    // if (user) {
+    //   if (pathname == "/") navigate("/r1");
+    // }
+    // if (user) {
+    //   socket(user?.token).emit("fetch_notifications", { source: "react" });
+    // }
   }, []);
   useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    } else if (user) {
+    // if (!user) {
+    //   navigate("/login");
+    // }
+    if (user) {
       if (user.token) {
         socket(user.token).emit("fetch_notifications", { source: "react" });
       }
@@ -821,164 +822,163 @@ const App = () => {
         }}
       >
         {/* header start */}
-        {user && (
-          <Layout style={{ height: "100%" }}>
-            <Header
-              style={{
-                zIndex: 4,
-                height: 45,
-                width: "100%",
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Row style={{ width: "100%" }} justify="space-between">
-                <Space size="large">
-                  <MenuOutlined
-                    onClick={() => {
-                      setShowSideBar((open) => !open);
-                    }}
-                    style={{
-                      color: "white",
-                      marginLeft: 12,
-                      fontSize: window.innerWidth > 1600 && "1rem",
-                    }}
-                  />
 
-                  <Space
-                    style={{
-                      color: "white",
-                      fontSize: "1rem",
-                    }}
-                  >
-                    <Logo />
-                    IMS
-                  </Space>
-                  <div className="location-select">
-                    <Select
-                      style={{ width: 200, color: "white" }}
-                      options={options}
-                      bordered={false}
-                      value="BRMSC012"
-                    />
-                  </div>
-                </Space>
-                <Space
-                  size="large"
+        <Layout style={{ height: "100%" }}>
+          <Header
+            style={{
+              zIndex: 4,
+              height: 45,
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <Row style={{ width: "100%" }} justify="space-between">
+              <Space size="large">
+                <MenuOutlined
+                  onClick={() => {
+                    setShowSideBar((open) => !open);
+                  }}
                   style={{
-                    position: "relative",
+                    color: "white",
+                    marginLeft: 12,
+                    fontSize: window.innerWidth > 1600 && "1rem",
+                  }}
+                />
+
+                <Space
+                  style={{
+                    color: "white",
+                    fontSize: "1rem",
                   }}
                 >
-                  {user.type && user.type.toLowerCase() == "developer" && (
-                    <Switch
-                      loading={testToggleLoading}
-                      checked={testPage}
-                      onChange={(value) => handleChangePageStatus(value)}
-                      checkedChildren="Test"
-                      unCheckedChildren="Live"
-                    />
-                  )}
-
-                  {favLoading ? (
-                    <LoadingOutlined
-                      style={{
-                        fontSize: 18,
-                        color: "white",
-                        cursor: "pointer",
-                      }}
-                    />
-                  ) : user.favPages.filter((fav) => fav.url == pathname)[0] ? (
-                    <StarFilled
-                      onClick={() => handleFavPages(true)}
-                      style={{
-                        fontSize: 18,
-                        color: "white",
-                        cursor: "pointer",
-                      }}
-                    />
-                  ) : (
-                    <StarOutlined
-                      onClick={() => handleFavPages(false)}
-                      style={{
-                        fontSize: 18,
-                        color: "white",
-                        cursor: "pointer",
-                      }}
-                    />
-                  )}
-
-                  <div>
-                    <Badge
-                      size="small"
-                      style={{
-                        background: notifications.filter(
-                          (not) => not?.loading || not?.status == "pending"
-                        )[0]
-                          ? "#EAAE0F"
-                          : "green",
-                      }}
-                      count={
-                        notifications.filter((not) => not?.type != "message")
-                          ?.length
-                      }
-                    >
-                      <BellFilled
-                        onClick={() => setShowNotifications((n) => !n)}
-                        style={{
-                          fontSize: 18,
-                          color: "white",
-                          // marginRight: 8,
-                        }}
-                      />
-                    </Badge>
-                    {showNotifications && (
-                      <Notifications
-                        source={"notifications"}
-                        showNotifications={showNotifications}
-                        notifications={notifications.filter(
-                          (not) => not?.type != "message"
-                        )}
-                        deleteNotification={deleteNotification}
-                      />
-                    )}
-                  </div>
-                  <div>
-                    <Badge
-                      size="small"
-                      count={
-                        notifications.filter((not) => not?.type == "message")
-                          .length
-                      }
-                    >
-                      <MessageOutlined
-                        onClick={() => setShowMessageDrawer(true)}
-                        style={{
-                          fontSize: 18,
-                          cursor: "pointer",
-                          color: "white",
-                        }}
-                      />
-                    </Badge>
-                  </div>
-                  <UserMenu user={user} logoutHandler={logoutHandler} />
+                  <Logo />
+                  IMS
                 </Space>
-              </Row>
-            </Header>
-          </Layout>
-        )}
+                <div className="location-select">
+                  <Select
+                    style={{ width: 200, color: "white" }}
+                    options={options}
+                    bordered={false}
+                    value="BRMSC012"
+                  />
+                </div>
+              </Space>
+              <Space
+                size="large"
+                style={{
+                  position: "relative",
+                }}
+              >
+                {/* {user.type && user.type.toLowerCase() == "developer" && (
+                  <Switch
+                    loading={testToggleLoading}
+                    checked={testPage}
+                    onChange={(value) => handleChangePageStatus(value)}
+                    checkedChildren="Test"
+                    unCheckedChildren="Live"
+                  />
+                )}
+
+                {favLoading ? (
+                  <LoadingOutlined
+                    style={{
+                      fontSize: 18,
+                      color: "white",
+                      cursor: "pointer",
+                    }}
+                  />
+                ) : user.favPages.filter((fav) => fav.url == pathname)[0] ? (
+                  <StarFilled
+                    onClick={() => handleFavPages(true)}
+                    style={{
+                      fontSize: 18,
+                      color: "white",
+                      cursor: "pointer",
+                    }}
+                  />
+                ) : (
+                  <StarOutlined
+                    onClick={() => handleFavPages(false)}
+                    style={{
+                      fontSize: 18,
+                      color: "white",
+                      cursor: "pointer",
+                    }}
+                  />
+                )} */}
+
+                <div>
+                  <Badge
+                    size="small"
+                    style={{
+                      background: notifications.filter(
+                        (not) => not?.loading || not?.status == "pending"
+                      )[0]
+                        ? "#EAAE0F"
+                        : "green",
+                    }}
+                    count={
+                      notifications.filter((not) => not?.type != "message")
+                        ?.length
+                    }
+                  >
+                    <BellFilled
+                      onClick={() => setShowNotifications((n) => !n)}
+                      style={{
+                        fontSize: 18,
+                        color: "white",
+                        // marginRight: 8,
+                      }}
+                    />
+                  </Badge>
+                  {showNotifications && (
+                    <Notifications
+                      source={"notifications"}
+                      showNotifications={showNotifications}
+                      notifications={notifications.filter(
+                        (not) => not?.type != "message"
+                      )}
+                      deleteNotification={deleteNotification}
+                    />
+                  )}
+                </div>
+                <div>
+                  <Badge
+                    size="small"
+                    count={
+                      notifications.filter((not) => not?.type == "message")
+                        .length
+                    }
+                  >
+                    <MessageOutlined
+                      onClick={() => setShowMessageDrawer(true)}
+                      style={{
+                        fontSize: 18,
+                        cursor: "pointer",
+                        color: "white",
+                      }}
+                    />
+                  </Badge>
+                </div>
+                {/* <UserMenu user={user} logoutHandler={logoutHandler} /> */}
+              </Space>
+            </Row>
+          </Header>
+        </Layout>
+
         {/* header ends */}
         {/* sidebar starts */}
         <Layout style={{ height: "100%" }}>
-          {user && (
-            <Sidebar
-              items={items}
-              items1={items1}
-              className="site-layout-background"
-              key={1}
-              setShowSideBar={setShowSideBar}
-              showSideBar={showSideBar}
-            />
-          )}
+          <Sidebar
+            items={items}
+            items1={items1}
+            className="site-layout-background"
+            key={1}
+            setShowSideBar={setShowSideBar}
+            showSideBar={showSideBar}
+          />
+
           {/* sidebar ends */}
           <Layout
             onClick={() => {
