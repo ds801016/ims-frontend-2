@@ -2,7 +2,7 @@
 
 # dependencies
 /node_modules
-/src/axiosInterceptor.js
+# /src/axiosInterceptor.js
 /.pnp
 .pnp.js
 
